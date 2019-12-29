@@ -1,7 +1,7 @@
 OPENMP ?= 0
 DEBUG  ?= 0
 
-OBJ= main.o
+OBJ= main.o utils.o
 EXECOBJA= 
 
 VPATH=./src/
