@@ -3,10 +3,14 @@
 
 #include "utils.h"
 
-#include <cmath>
+#include <math.h>
 
 struct Vec3 {
-    float x, y, z;
+    union {
+        struct { float x, y, z; };
+        struct { float u, v, w; };
+        struct { float r, g, b; };
+    };
     Vec3() : x(0), y(0), z(0) { }
     Vec3(float x, float y, float z) : x(x), y(y), z(z) { }
     Vec3(float x) : Vec3(x, x, x) { }
@@ -17,6 +21,8 @@ struct Vec3 {
     inline Vec3 Normalized() const      { float d = Length(); return { x / d, y / d, z / d }; };
     inline float MinComponent() const   { return Min(x, Min(y, z)); };
     inline float MaxComponent() const   { return Max(x, Max(y, z)); };
+
+    inline float operator[](int i) const { return (&x)[i]; }
 };
 
 static inline Vec3 RandomUnitVector() { return Vec3(RandomUniform(-1,1), RandomUniform(-1,1), RandomUniform(-1,1)).Normalized(); }
@@ -40,5 +46,8 @@ static inline Vec3 Cross(const Vec3& a, const Vec3& b)  { return { a.y*b.z - a.z
 static inline Vec3 Pow(const Vec3& v, const float a)    { return { pow(v.x, a), pow(v.y, a), pow(v.z, a) }; }
 static inline Vec3 Floor(const Vec3& v)                 { return { floorf(v.x), floorf(v.y), floorf(v.z) }; }
 static inline Vec3 Abs(const Vec3& v)                   { return { fabsf(v.x), fabsf(v.y), fabsf(v.z) }; }
+
+template<> inline Vec3 Min(Vec3 a, Vec3 b) { return { Min(a.x, b.x), Min(a.y, b.y), Min(a.z, b.z) }; }
+template<> inline Vec3 Max(Vec3 a, Vec3 b) { return { Max(a.x, b.x), Max(a.y, b.y), Max(a.z, b.z) }; }
 
 #endif

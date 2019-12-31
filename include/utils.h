@@ -1,8 +1,17 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-#define INF 1e9
-#define EPS 1e-6
+constexpr float M_INF = 1e9;
+constexpr float M_EPS = 1e-6;
+#ifndef M_PI
+constexpr float M_PI = 3.14159265358979323846264338327950288;
+#endif
+#ifndef M_PI_2
+constexpr const float M_PI_2 = 1.57079632679489661923132169163975144;
+#endif
+
+#define RAD2DEG(rads) (rads*180.f/M_PI)
+#define DEG2RAD(degs) (degs*M_PI/180.f)
 
 // reinventing the wheel so we don't have to import std headers and drastically increase the compile time..
 template<typename T> static inline T Min(T lhs, T rhs)          { return lhs < rhs ? lhs : rhs; }
