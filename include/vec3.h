@@ -5,6 +5,8 @@
 
 #include <math.h>
 
+typedef Vec3 Rgb;
+
 struct Vec3 {
     union {
         struct { double x, y, z; };
