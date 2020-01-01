@@ -15,7 +15,7 @@ struct Vec3 {
     Vec3(double x, double y, double z) : x(x), y(y), z(z) { }
     Vec3(double x) : Vec3(x, x, x) { }
 
-    inline double Length() const            { return sqrtf(x*x + y*y + z*z); };
+    inline double Length() const            { return sqrt(x*x + y*y + z*z); };
     inline double LengthN(double n) const   { return pow(pow(x, n) + pow(y, n) + pow(z, n), 1./n); };
     inline double LengthSquared() const     { return x*x + y*y + z*z; };
     inline Vec3 Normalized() const          { double d = Length(); return { x / d, y / d, z / d }; };
@@ -44,8 +44,8 @@ static inline double Dot(const Vec3& a, const Vec3& b)  { return a.x*b.x + a.y*b
 static inline Vec3 Cross(const Vec3& a, const Vec3& b)  { return { a.y*b.z - a.z*b.y, a.z*b.x - a.x*b.z, a.x*b.y - a.y*b.x }; }
 
 static inline Vec3 Pow(const Vec3& v, const double a)   { return { pow(v.x, a), pow(v.y, a), pow(v.z, a) }; }
-static inline Vec3 Floor(const Vec3& v)                 { return { floorf(v.x), floorf(v.y), floorf(v.z) }; }
-static inline Vec3 Abs(const Vec3& v)                   { return { fabsf(v.x), fabsf(v.y), fabsf(v.z) }; }
+static inline Vec3 Floor(const Vec3& v)                 { return { floor(v.x), floor(v.y), floor(v.z) }; }
+static inline Vec3 Abs(const Vec3& v)                   { return { fabs(v.x), fabs(v.y), fabs(v.z) }; }
 
 template<> inline Vec3 Min(Vec3 a, Vec3 b) { return { Min(a.x, b.x), Min(a.y, b.y), Min(a.z, b.z) }; }
 template<> inline Vec3 Max(Vec3 a, Vec3 b) { return { Max(a.x, b.x), Max(a.y, b.y), Max(a.z, b.z) }; }

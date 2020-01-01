@@ -10,7 +10,7 @@ static inline Vec3 RefractVec(const Vec3& v, const Vec3& n, double ratio)
     double dt = Dot(v, n);
     double discriminant = 1.0 - ratio*ratio*(1.0 - dt*dt);
     if(discriminant <= 0.0) return {};
-    return ratio*(v - n*dt) - n*sqrtf(discriminant);
+    return ratio*(v - n*dt) - n*sqrt(discriminant);
 }
 
 Ray Ray::Reflect(const Vec3& position, const Vec3& normal) const
