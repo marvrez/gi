@@ -1,15 +1,26 @@
 #include "utils.h"
 
+#include "vec3.h"
+
 #include <chrono>
 #include <random>
 
 static std::random_device rd;
 static std::mt19937 rng(rd());
 
-float RandomUniform(float a, float b)
+double RandomUniform(double a, double b)
 {
-    std::uniform_real_distribution<float> uniform_dist(a, b);
+    std::uniform_real_distribution<double> uniform_dist(a, b);
     return uniform_dist(rng);
+}
+
+Vec3 RandomInUnitDisk()
+{
+    Vec3 v;
+    do {
+        v = 2.0*Vec3(RandomUniform(), RandomUniform(), 0) - Vec3(1,1,0);
+    } while(v.LengthSquared() >= 1.0);
+    return v;
 }
 
 double TimeNow()
