@@ -12,6 +12,7 @@ struct Vec3 {
         struct { double x, y, z; };
         struct { double u, v, w; };
         struct { double r, g, b; };
+        double data[3];
     };
     Vec3() : x(0), y(0), z(0) { }
     Vec3(double x, double y, double z) : x(x), y(y), z(z) { }
@@ -24,7 +25,7 @@ struct Vec3 {
     inline double MinComponent() const      { return Min(x, Min(y, z)); };
     inline double MaxComponent() const      { return Max(x, Max(y, z)); };
 
-    inline double operator[](int i) const   { return (&x)[i]; }
+    inline double operator[](int i) const   { return data[i]; }
 };
 
 static inline Vec3 RandomUnitVector() { return Vec3(RandomUniform(-1,1), RandomUniform(-1,1), RandomUniform(-1,1)).Normalized(); }

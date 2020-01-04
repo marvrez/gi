@@ -9,8 +9,8 @@ struct Ray;
 struct HitRecord;
 
 struct Hit {
-    double t;
-    const Surface* s;
+    double t = M_INF;
+    const Surface* s = nullptr;
 
     void RecordHit(double t, const Surface* s);
     HitRecord GetRecord(const Ray& r);
