@@ -13,6 +13,8 @@ constexpr double M_PI_2 = 1.57079632679489661923132169163975144;
 #define RAD2DEG(rads) (rads*180./M_PI)
 #define DEG2RAD(degs) (degs*M_PI/180.)
 
+enum class Axis : int { NONE = -1, X, Y, Z, };
+
 // reinventing the wheel so we don't have to import std headers and drastically increase the compile time..
 template<typename T> static inline T Min(T lhs, T rhs)          { return lhs < rhs ? lhs : rhs; }
 template<typename T> static inline T Max(T lhs, T rhs)          { return lhs >= rhs ? lhs : rhs; }
@@ -24,6 +26,7 @@ double RandomUniform(double a=0., double b=1.);
 
 struct Vec3;
 Vec3 RandomInUnitDisk();
+Vec3 RandomInUnitSphere();
 
 double TimeNow();
 

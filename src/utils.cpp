@@ -23,6 +23,15 @@ Vec3 RandomInUnitDisk()
     return v;
 }
 
+Vec3 RandomInUnitSphere()
+{
+    Vec3 v;
+    do {
+        v = 2.0*Vec3(RandomUniform(), RandomUniform(), RandomUniform()) - Vec3(1, 1, 1);
+    } while(v.LengthSquared() >= 1.0);
+    return v;
+}
+
 double TimeNow()
 {
     using namespace std::chrono;
