@@ -49,6 +49,7 @@ static inline Vec3 Cross(const Vec3& a, const Vec3& b)  { return { a.y*b.z - a.z
 static inline Vec3 Pow(const Vec3& v, const double a)   { return { pow(v.x, a), pow(v.y, a), pow(v.z, a) }; }
 static inline Vec3 Floor(const Vec3& v)                 { return { floor(v.x), floor(v.y), floor(v.z) }; }
 static inline Vec3 Abs(const Vec3& v)                   { return { fabs(v.x), fabs(v.y), fabs(v.z) }; }
+static inline Vec3 Fract(const Vec3& v)                 { return { fmod(v.x, 1.), fmod(v.y, 1.), fmod(v.z, 1.) }; }
 
 template<> inline Vec3 Min(Vec3 a, Vec3 b) { return { Min(a.x, b.x), Min(a.y, b.y), Min(a.z, b.z) }; }
 template<> inline Vec3 Max(Vec3 a, Vec3 b) { return { Max(a.x, b.x), Max(a.y, b.y), Max(a.z, b.z) }; }
