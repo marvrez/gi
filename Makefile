@@ -1,7 +1,7 @@
 OPENMP ?= 0
 DEBUG  ?= 0
 
-OBJ= main.o utils.o
+OBJ= main.o utils.o image.o ray.o sphere.o hit.o camera.o bbox.o kdtree.o scene.o texture.o plane.o
 EXECOBJA= 
 
 VPATH=./src/
