@@ -5,7 +5,7 @@
 
 #include <math.h>
 
-Sphere::Sphere(Vec3 centre, double radius, Material material)
+Sphere::Sphere(Vec3 centre, double radius, Material* material)
     : centre(centre), radius(radius), material(material)
 {
     Vec3 min_point = {centre.x - radius, centre.y - radius, centre.z - radius};
@@ -54,7 +54,12 @@ Vec3 Sphere::NormalAt(const Vec3& p) const
     return (p - this->centre).Normalized();
 }
 
-Material Sphere::MaterialAt(const Vec3& p) const
+Material* Sphere::MaterialAt(const Vec3& p) const
 {
-    return this->material;
+    return this->material.get();
+}
+
+bool Sphere::Emittable() const
+{
+    return this->material->Emittable();
 }

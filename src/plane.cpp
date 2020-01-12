@@ -3,7 +3,7 @@
 #include "ray.h"
 #include "hit.h"
 
-Plane::Plane(Vec3 point, Vec3 normal, Material material)
+Plane::Plane(Vec3 point, Vec3 normal, Material* material)
     : point(point), material(material)
 {
     this->normal = normal.Normalized();
@@ -31,7 +31,12 @@ Vec3 Plane::NormalAt(const Vec3& p) const
     return this->normal;
 }
 
-Material Plane::MaterialAt(const Vec3& p) const
+Material* Plane::MaterialAt(const Vec3& p) const
 {
-    return this->material;
+    return this->material.get();
+}
+
+bool Plane::Emittable() const
+{
+    return this->material->Emittable();
 }

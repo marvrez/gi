@@ -14,6 +14,7 @@ struct Ray;
 class Scene {
 private:
     std::vector<Surface*> surfaces;
+    std::vector<Surface*> lights;
     std::unique_ptr<KDTree> tree;
     std::atomic<unsigned> ray_count;
 

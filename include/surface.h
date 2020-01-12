@@ -4,6 +4,8 @@
 #include "vec3.h"
 #include "material.h"
 
+#include <memory>
+
 struct BBox;
 struct Ray;
 struct Hit;
@@ -14,7 +16,8 @@ public:
     virtual bool Intersect(const Ray& r, Hit* h) = 0;
     virtual Vec3 UV(const Vec3& p) const { return {}; }
     virtual Vec3 NormalAt(const Vec3& p) const { return {}; }
-    virtual Material MaterialAt(const Vec3& p) const { return {}; }
+    virtual Material* MaterialAt(const Vec3& p) const { return {}; }
+    virtual bool Emittable() const { return false; }
 };
 
 #endif

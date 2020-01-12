@@ -9,17 +9,18 @@ class Sphere : public Surface {
 private:
     Vec3 centre;
     double radius;
-    Material material;
+    std::shared_ptr<Material> material;
     BBox bbox;
 
 public:
-    Sphere(Vec3 centre, double radius, Material material);
+    Sphere(Vec3 centre, double radius, Material* material);
 
     virtual BBox GetBBox();
     virtual bool Intersect(const Ray& r, Hit* h);
     virtual Vec3 UV(const Vec3& p) const;
     virtual Vec3 NormalAt(const Vec3& p) const;
-    virtual Material MaterialAt(const Vec3& p) const;
+    virtual Material* MaterialAt(const Vec3& p) const;
+    virtual bool Emittable() const;
 };
 
 #endif

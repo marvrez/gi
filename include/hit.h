@@ -21,7 +21,7 @@ struct HitRecord {
     Vec3 position;
     Vec3 normal;
     double u, v;
-    Material material;
+    Material* material;
 };
 
 #endif
