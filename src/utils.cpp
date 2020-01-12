@@ -5,8 +5,8 @@
 #include <chrono>
 #include <random>
 
-static std::random_device rd;
-static std::mt19937 rng(rd());
+static thread_local std::random_device rd;
+static thread_local std::mt19937 rng(rd());
 
 double RandomUniform(double a, double b)
 {
@@ -16,20 +16,24 @@ double RandomUniform(double a, double b)
 
 Vec3 RandomInUnitDisk()
 {
-    Vec3 v;
-    do {
-        v = 2.0*Vec3(RandomUniform(), RandomUniform(), 0) - Vec3(1,1,0);
-    } while(v.LengthSquared() >= 1.0);
-    return v;
+    double r = sqrt(RandomUniform());
+    double theta = RandomUniform()*2.0*M_PI;
+    return { r*cos(theta), r*sin(theta), 0.0 };
 }
 
 Vec3 RandomInUnitSphere()
 {
-    Vec3 v;
-    do {
-        v = 2.0*Vec3(RandomUniform(), RandomUniform(), RandomUniform()) - Vec3(1, 1, 1);
-    } while(v.LengthSquared() >= 1.0);
-    return v;
+    double cos_phi = 2.0*RandomUniform() - 1.0;
+    double sin_phi = sqrt(Max(0.0, 1.0 - cos_phi*cos_phi));
+    double theta = 2*M_PI*RandomUniform();
+    return { sin_phi*sin(theta), cos_phi, sin_phi*cos(theta)};
+}
+
+Vec3 CosineSampleHemisphere()
+{
+    Vec3 d = RandomInUnitDisk();
+    double z = sqrt(Max(0.0, 1.0 - d.x*d.x - d.y*d.y));
+    return { d.x, d.y, z };
 }
 
 double TimeNow()

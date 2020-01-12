@@ -24,16 +24,18 @@ bool BBox::Intersects(const BBox& b)  const
 
 bool BBox::Intersect(const Ray& r, double* tmin, double* tmax) const
 {
-    for(int a = 0; a < 3; ++a) {
-        double t0 = Min((this->min_point[a] - r.origin[a]) / r.direction[a],  
-                        (this->max_point[a] - r.origin[a]) / r.direction[a]);
-        double t1 = Max((this->min_point[a] - r.origin[a]) / r.direction[a],  
-                        (this->max_point[a] - r.origin[a]) / r.direction[a]);
-        *tmin = Max(*tmin, t0);
-        *tmax = Min(*tmax, t1);
-        if(*tmin > *tmax) return false;
-    }
-	return true;
+    double x1 = (this->min_point.x - r.origin.x) / r.direction.x;
+    double y1 = (this->min_point.y - r.origin.y) / r.direction.y;
+    double z1 = (this->min_point.z - r.origin.z) / r.direction.z;
+    double x2 = (this->max_point.x - r.origin.x) / r.direction.x;
+    double y2 = (this->max_point.y - r.origin.y) / r.direction.y;
+    double z2 = (this->max_point.z - r.origin.z) / r.direction.z;
+    if(x1 > x2) Swap(x1, x2);
+    if(y1 > y2) Swap(y1, y2);
+    if(z1 > z2) Swap(z1, z2);
+    *tmin = Max(Max(x1, y1), z1);
+    *tmax = Min(Min(x2, y2), z2);
+    return *tmin <= *tmax;
 }
 
 Vec3 BBox::Size() const

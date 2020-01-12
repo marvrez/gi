@@ -45,6 +45,7 @@ static inline bool operator==(const Vec3& lhs, const Vec3& rhs)     { return lhs
 
 static inline double Dot(const Vec3& a, const Vec3& b)  { return a.x*b.x + a.y*b.y + a.z*b.z; }
 static inline Vec3 Cross(const Vec3& a, const Vec3& b)  { return { a.y*b.z - a.z*b.y, a.z*b.x - a.x*b.z, a.x*b.y - a.y*b.x }; }
+static inline Vec3 Normalized(const Vec3& a)            { return a.Normalized(); }
 
 static inline Vec3 Pow(const Vec3& v, const double a)   { return { pow(v.x, a), pow(v.y, a), pow(v.z, a) }; }
 static inline Vec3 Floor(const Vec3& v)                 { return { floor(v.x), floor(v.y), floor(v.z) }; }

@@ -1,8 +1,9 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-constexpr double M_INF = 1e9;
-constexpr double M_EPS = 1e-6;
+constexpr double M_INF      = 1e9;
+constexpr double M_EPS      = 1e-6;
+constexpr double M_SQRT1_3  = 0.57735026918962576450914878050195746;
 #ifndef M_PI
 constexpr double M_PI = 3.14159265358979323846264338327950288;
 #endif
@@ -27,6 +28,9 @@ double RandomUniform(double a=0., double b=1.);
 struct Vec3;
 Vec3 RandomInUnitDisk();
 Vec3 RandomInUnitSphere();
+Vec3 CosineSampleHemisphere();
+
+Vec3 TransformToWorld(double x, double y, double z, const Vec3& normal);
 
 double TimeNow();
 
