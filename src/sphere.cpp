@@ -2,6 +2,7 @@
 
 #include "ray.h"
 #include "hit.h"
+#include "onb.h"
 
 #include <math.h>
 
@@ -13,12 +14,12 @@ Sphere::Sphere(Vec3 centre, double radius, Material* material)
     this->bbox = { min_point, max_point };
 }
 
-BBox Sphere::GetBBox()
+BBox Sphere::GetBBox() const
 {
     return this->bbox;
 }
 
-bool Sphere::Intersect(const Ray& r, Hit* h)
+bool Sphere::Intersect(const Ray& r, Hit* h) const
 {
     Vec3 to = r.origin - this->centre;
     double b = Dot(to, r.direction);
@@ -62,4 +63,19 @@ Material* Sphere::MaterialAt(const Vec3& p) const
 bool Sphere::Emittable() const
 {
     return this->material->Emittable();
+}
+
+Ray Sphere::RandomRay(const Vec3& hit_point) const
+{
+    ONB onb(this->centre - hit_point);
+    Vec3 p = this->centre + onb.LocalToWorld(this->radius*RandomInUnitDisk());
+    return Ray(hit_point, Normalized(p - hit_point));
+}
+
+double Sphere::Pdf(const Ray& r) const
+{
+    Hit h;
+    if(!this->Intersect(r, &h)) return 0.0;
+    double costhetamax = sqrt(Max(0.0, 1 - this->radius*this->radius / (this->centre - r.origin).LengthSquared()));
+    return 1.0 / (2.0*M_PI*(1.0 - costhetamax)); // 1 / solidangle
 }

@@ -9,7 +9,7 @@ static inline Vec3 RefractVec(const Vec3& v, const Vec3& n, double ratio)
 {
     double dt = Dot(v, n);
     double discriminant = 1.0 - ratio*ratio*(1.0 - dt*dt);
-    if(discriminant <= 0.0) return {};
+    if(discriminant <= 0.0) return Vec3(0);
     return ratio*(v - n*dt) - n*sqrt(discriminant);
 }
 

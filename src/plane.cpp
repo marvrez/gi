@@ -10,12 +10,12 @@ Plane::Plane(Vec3 point, Vec3 normal, Material* material)
     this->bbox = { Vec3(-M_INF), Vec3(M_INF) };
 }
 
-BBox Plane::GetBBox()
+BBox Plane::GetBBox() const
 {
     return this->bbox;
 }
 
-bool Plane::Intersect(const Ray& r, Hit* h)
+bool Plane::Intersect(const Ray& r, Hit* h) const
 {
     double d = Dot(this->normal, r.direction);
     if(abs(d) < M_EPS) return false;

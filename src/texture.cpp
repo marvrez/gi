@@ -9,7 +9,7 @@ Vec3 CheckeredTexture::Sample(double u, double v, const Vec3& p) const
 {
     double f = this->freq;
     double s = sin(f*p.x)*sin(f*p.y)*sin(f*p.z);
-    return s < 0 ?  a->Sample(u, v, p) : b->Sample(u, v, p);
+    return s < 0 ? a->Sample(u, v, p) : b->Sample(u, v, p);
 }
 
 Vec3 GridTexture::Sample(double u, double v, const Vec3& p) const
