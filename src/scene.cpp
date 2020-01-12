@@ -10,6 +10,7 @@ void Scene::Add(Surface* s)
 
 bool Scene::Intersect(const Ray& r, Hit* h)
 {
+    this->ray_count++;
     return this->tree->Intersect(r, h);
 }
 

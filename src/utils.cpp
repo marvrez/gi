@@ -32,7 +32,7 @@ Vec3 RandomInUnitSphere()
 Vec3 CosineSampleHemisphere()
 {
     Vec3 d = RandomInUnitDisk();
-    double z = sqrt(Max(0.0, 1.0 - d.x*d.x - d.y*d.y));
+    double z = sqrt(Max(0.0, 1.0 - d.x*d.x - d.y*d.y)); // project z up to the unit hemisphere
     return { d.x, d.y, z };
 }
 

@@ -30,8 +30,6 @@ Vec3 RandomInUnitDisk();
 Vec3 RandomInUnitSphere();
 Vec3 CosineSampleHemisphere();
 
-Vec3 TransformToWorld(double x, double y, double z, const Vec3& normal);
-
 double TimeNow();
 
 #endif
