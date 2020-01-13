@@ -14,6 +14,12 @@ double RandomUniform(double a, double b)
     return uniform_dist(rng);
 }
 
+int RandomUniform(int a, int b)
+{
+    std::uniform_int_distribution<int> uniform_dist(a, b);
+    return uniform_dist(rng);
+}
+
 Vec3 RandomInUnitDisk()
 {
     double r = sqrt(RandomUniform());

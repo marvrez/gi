@@ -21,9 +21,9 @@ private:
 public:
     Scene() : ray_count(0) {};
     void Add(Surface* s);
-    std::vector<Surface*> Lights() const { return this->lights; }
     bool Intersect(const Ray& r, Hit* h);
     void Build();
+    std::vector<Surface*> Lights() const { return this->lights; }
     unsigned RayCount() const { return this->ray_count.load(); }
     void ResetRayCount() { this->ray_count = 0; }
 };

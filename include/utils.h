@@ -24,6 +24,7 @@ template<typename T> static inline T Lerp(T a, T b, double t)   { return (T)(a +
 template<typename T> static inline void Swap(T& a, T& b)        { T tmp = a; a = b; b = tmp; }
 
 double RandomUniform(double a=0., double b=1.);
+int RandomUniform(int a, int b);
 
 struct Vec3;
 Vec3 RandomInUnitDisk();
