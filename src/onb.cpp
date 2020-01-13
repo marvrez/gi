@@ -13,7 +13,7 @@ ONB::ONB(const Vec3& normal)
     else major_axis = { 0, 0, 1 };
 
     this->u = Normalized(Cross(n, major_axis));
-    this->v = Cross(n, u);
+    this->v = Cross(n, this->u);
     this->w = n;
 }
 
