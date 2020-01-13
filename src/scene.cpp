@@ -4,6 +4,8 @@
 #include "kdtree.h"
 #include "surface.h"
 
+static thread_local unsigned ray_count;
+
 void Scene::Add(Surface* s)
 {
     this->surfaces.push_back(s);
@@ -12,7 +14,7 @@ void Scene::Add(Surface* s)
 
 bool Scene::Intersect(const Ray& r, Hit* h)
 {
-    this->ray_count++;
+    ray_count++;
     return this->tree->Intersect(r, h);
 }
 
@@ -21,4 +23,14 @@ void Scene::Build()
     if(this->tree == nullptr) {
         this->tree = std::make_unique<KDTree>(this->surfaces);
     }
+}
+
+unsigned Scene::RayCount()
+{
+    return ray_count;
+}
+
+void Scene::ResetRayCount()
+{
+    ray_count = 0;
 }

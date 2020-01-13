@@ -5,7 +5,6 @@
 
 #include <vector>
 #include <memory>
-#include <atomic>
 
 class Surface;
 struct Hit;
@@ -16,16 +15,16 @@ private:
     std::vector<Surface*> surfaces;
     std::vector<Surface*> lights;
     std::unique_ptr<KDTree> tree;
-    std::atomic<unsigned> ray_count;
 
 public:
-    Scene() : ray_count(0) {};
+    Scene() {};
     void Add(Surface* s);
     bool Intersect(const Ray& r, Hit* h);
     void Build();
     std::vector<Surface*> Lights() const { return this->lights; }
-    unsigned RayCount() const { return this->ray_count.load(); }
-    void ResetRayCount() { this->ray_count = 0; }
+
+    static unsigned RayCount();
+    static void ResetRayCount();
 };
 
 #endif
