@@ -8,6 +8,7 @@
 
 ///////////////////// STATIC UTILITY FUNCTIONS START ////////////////////////////
 
+// Schlick approximation of fresnel term of a dielectric surface
 static inline double Schlick(double cosine, double ref_idx)
 {
     double r0 = (1.0 - ref_idx) / (1.0 + ref_idx);
@@ -36,16 +37,6 @@ static inline double CosPhi(const Vec3& w)
 static inline bool SameHemisphere(const Vec3& wo, const Vec3& wi)
 {
     return wo.z*wi.z > 0;
-}
-
-static inline bool Refract(const Vec3& v, const Vec3& n, double ratio, Vec3* refracted)
-{
-    Vec3 uv = Normalized(v);
-    double dt = Dot(uv, n);
-    double discriminant = 1.0 - ratio*ratio*(1.0 - dt*dt);
-    if(discriminant <= 0) return false;
-    *refracted = ratio*(uv - n*dt) - n*sqrt(discriminant);
-    return true;
 }
 
 ///////////////////// STATIC UTILITY FUNCTIONS END ////////////////////////////

@@ -55,4 +55,14 @@ static inline Vec3 Fract(const Vec3& v)                 { return { fmod(v.x, 1.)
 template<> inline Vec3 Min(Vec3 a, Vec3 b) { return { Min(a.x, b.x), Min(a.y, b.y), Min(a.z, b.z) }; }
 template<> inline Vec3 Max(Vec3 a, Vec3 b) { return { Max(a.x, b.x), Max(a.y, b.y), Max(a.z, b.z) }; }
 
+static inline Vec3 Reflect(const Vec3& v, const Vec3& n) { return 2.0*Dot(v, n)*n - v; }
+static inline bool Refract(const Vec3& v, const Vec3& n, double ratio, Vec3* refracted)
+{
+    Vec3 uv = Normalized(v);
+    double dt = Dot(uv, n), discriminant = 1.0 - ratio*ratio*(1.0 - dt*dt);
+    if(discriminant <= 0) return false;
+    *refracted = ratio*(uv - n*dt) - n*sqrt(discriminant);
+    return true;
+}
+
 #endif
