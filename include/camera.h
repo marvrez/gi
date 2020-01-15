@@ -18,7 +18,7 @@ public:
     Camera(const Vec3& lookfrom, const Vec3& lookat, const Vec3& up,
             double vfov, double aspect, double aperture, double focus_dist);
     Camera(const Vec3& lookfrom, const Vec3& lookat, const Vec3& up,
-            double vfov, double aspect);
+            double vfov, double aspect, double aperture=0.0);
     Ray CastRay(double u, double v);
 };
 

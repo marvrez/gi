@@ -8,7 +8,7 @@
 PowerCosineDistribution::PowerCosineDistribution(double exponent)
     : n(exponent)
 {
-    this->norm1 = (exponent+1.0) / (2.0*M_PI);
+    this->norm1 = (exponent+1.0) / (2*M_PI);
     this->norm2 = (exponent+2.0) / M_PI;
 }
 
@@ -24,7 +24,7 @@ double PowerCosineDistribution::Pdf(const Vec3& wo, const Vec3& wi) const
     return (this->norm1*pow(fabs(wh.z), this->n)) / (4.0*Dot(wo, wh));
 }
 
-Vec3 PowerCosineDistribution::Sample(const Vec3& p, const Vec3& wo) const
+Vec3 PowerCosineDistribution::Sample(const Vec3& wo) const
 {
     double costheta = pow(RandomUniform(), 1.0 / (this->n + 1.0));
     double sintheta = sqrt(Max(0.0, 1.0 - costheta*costheta));

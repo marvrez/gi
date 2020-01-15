@@ -24,8 +24,8 @@ Camera::Camera(const Vec3& lookfrom, const Vec3& lookat, const Vec3& up,
 }
 
 Camera::Camera(const Vec3& lookfrom, const Vec3& lookat, const Vec3& up,
-        double vfov, double aspect) 
-    : Camera(lookfrom, lookat, up, vfov, aspect, 0, (lookat-lookfrom).Length())
+        double vfov, double aspect, double aperture) 
+    : Camera(lookfrom, lookat, up, vfov, aspect, aperture, (lookat-lookfrom).Length())
 {
 }
 
