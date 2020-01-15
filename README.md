@@ -1,5 +1,5 @@
 # tracer
-Custom path tracer based on Shirley's "Ray Tracing in One Weekend".
+Custom path tracer inspired by and based on the work found in pbrt v3 and raytracing series by Shirley et al.
 
 ## Installation
 
