@@ -3,6 +3,7 @@
 
 #include "vec3.h"
 #include "texture.h"
+#include "microfacet_distribution.h"
 
 #include <memory>
 
@@ -107,5 +108,37 @@ public:
     virtual Vec3 Sample(const Vec3& wo, bool* is_specular) const;
     virtual double Pdf(const Vec3& wo, const Vec3& wi) const;
 };
+
+class Microfacet : public Material {
+private:
+    std::shared_ptr<Texture> albedo;
+    std::shared_ptr<MicrofacetDistribution> dist;
+    double eta;
+public:
+    Microfacet(Texture* albedo, MicrofacetDistribution* distribution, double eta)
+        : albedo(albedo), dist(distribution), eta(eta) {}
+    Microfacet(Vec3 col, MicrofacetDistribution* distribution, double eta)
+        : Microfacet(new SolidTexture(col), distribution, eta) {}
+
+    virtual Vec3 Eval(const Vec3& wo, const Vec3& wi, const HitRecord& hr) const;
+    virtual double Pdf(const Vec3& wo, const Vec3& wi) const;
+    virtual Vec3 Sample(const Vec3& wo, bool* is_specular) const;
+};
+
+class FresnelBlend : public Material {
+private:
+    std::shared_ptr<Texture> rd, rs; // diffuse and specular reflection textures
+    std::shared_ptr<MicrofacetDistribution> dist;
+public:
+    FresnelBlend(Vec3 col_d, Vec3 col_s, MicrofacetDistribution* distribution)
+        : FresnelBlend(new SolidTexture(col_d), new SolidTexture(col_s), distribution) {}
+    FresnelBlend(Texture* rd, Texture* rs, MicrofacetDistribution* distribution)
+        : rd(rd), rs(rs), dist(distribution) {}
+
+    virtual Vec3 Eval(const Vec3& wo, const Vec3& wi, const HitRecord& hr) const;
+    virtual double Pdf(const Vec3& wo, const Vec3& wi) const;
+    virtual Vec3 Sample(const Vec3& wo, bool* is_specular) const;
+};
+
 
 #endif

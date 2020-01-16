@@ -5,7 +5,6 @@
 
 #include <math.h>
 
-
 ///////////////////// STATIC UTILITY FUNCTIONS START ////////////////////////////
 
 // Schlick approximation of fresnel term of a dielectric surface
@@ -163,4 +162,61 @@ Vec3 Velvet::Sample(const Vec3& wo, bool* is_specular) const
 double Velvet::Pdf(const Vec3& wo, const Vec3& wi) const
 {
     return SameHemisphere(wo, wi) ? fabs(wi.z) / M_PI : 0.0;
+}
+
+Vec3 Microfacet::Eval(const Vec3& wo, const Vec3& wi, const HitRecord& hr) const
+{
+    Vec3 wh = Normalized(wi + wo);
+    double costheta_o = AbsCosTheta(wo), costheta_i = AbsCosTheta(wi), costheta_h = AbsCosTheta(wh.z);
+    if(costheta_o == 0 || costheta_i == 0) return Vec3(0.0);
+    double costheta = Dot(wi, wh); // = fabs(Dot(wo,wh));
+    Vec3 R = this->albedo->Sample(hr.u, hr.v, hr.position);
+    double F = Schlick(costheta, this->eta); // TODO: generalize for arbitrary fresnel functions?
+    double G = Min(1.0, Min(2*costheta_h*costheta_o / costheta, 2*costheta_h*costheta_i/ costheta));
+    double D = this->dist->Eval(wh);
+    return R * F*G*D / (4*costheta_i*costheta_o);
+}
+
+double Microfacet::Pdf(const Vec3& wo, const Vec3& wi) const
+{
+    return SameHemisphere(wo, wi) ? this->dist->Pdf(wo, wi) : 0.0;
+}
+
+Vec3 Microfacet::Sample(const Vec3& wo, bool* is_specular) const
+{
+    Vec3 wi = this->dist->Sample(wo);
+    if(!SameHemisphere(wo, wi)) return Vec3(0.0);
+    *is_specular = false;
+    return wi;
+}
+
+static inline Vec3 SchlickFresnel(const Vec3& rs, double costheta) { return rs + pow(1.0 - costheta, 5.0)*(Vec3(1.0) - rs); }
+
+Vec3 FresnelBlend::Eval(const Vec3& wo, const Vec3& wi, const HitRecord& hr) const
+{
+    Vec3 srd = this->rd->Sample(hr.u, hr.v, hr.position), srs = this->rs->Sample(hr.u, hr.v, hr.position); // sampled values
+    Vec3 wh = Normalized(wi + wo);
+    double costheta_i = AbsCosTheta(wi), costheta_o = AbsCosTheta(wo), costheta = Dot(wi, wh);
+    Vec3 D = this->dist->Eval(wh), F = SchlickFresnel(srs, costheta);
+    Vec3 specular =  F*D / (4*fabs(costheta)*Max(costheta_i, costheta_o));
+    Vec3 diffuse = (28.0 / (23.0*M_PI))*srd*(Vec3(1.0) - srs)*(1.0 - pow(1.0 - 0.5*costheta_i, 5))*(1.0 - pow(1.0 - 0.5*costheta_o, 5));
+    return diffuse + specular;
+}
+
+double FresnelBlend::Pdf(const Vec3& wo, const Vec3& wi) const
+{
+    return SameHemisphere(wo, wi) ? 0.5*(AbsCosTheta(wi) / M_PI + this->dist->Pdf(wo, wi)) : 0.0;
+}
+
+Vec3 FresnelBlend::Sample(const Vec3& wo, bool* is_specular) const
+{
+    Vec3 wi;
+    double p = RandomUniform();
+    if(p < 0.5) { // diffuse
+        wi = CosineSampleHemisphere();
+        if(wo.z < 0) wi.z *= -1;
+    }
+    else wi = this->dist->Sample(wo); // specular
+    *is_specular = false;
+    return wi;
 }
