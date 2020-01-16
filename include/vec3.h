@@ -55,6 +55,14 @@ static inline Vec3 Fract(const Vec3& v)                 { return { fmod(v.x, 1.)
 template<> inline Vec3 Min(Vec3 a, Vec3 b) { return { Min(a.x, b.x), Min(a.y, b.y), Min(a.z, b.z) }; }
 template<> inline Vec3 Max(Vec3 a, Vec3 b) { return { Max(a.x, b.x), Max(a.y, b.y), Max(a.z, b.z) }; }
 
+// linear mapping from t in [0, 1] to [low, high]
+static inline double Mix(double low, double high, double t)                             { return low + (high - low)*t; }
+static inline Vec3 Mix(const Vec3& low, const Vec3& high, double t)                     { return low + (high - low)*t; }
+static inline Vec3 Mix(const Vec3& low, const Vec3& high, const Vec3& t)                { return low + (high - low)*t; }
+
+static inline bool All(const Vec3& v) { return v.x == 0.0 && v.y == 0.0 && v.z == 0.0; }
+static inline bool Any(const Vec3& v) { return v.x == 0.0 || v.y == 0.0 || v.z == 0.0; }
+
 static inline Vec3 Reflect(const Vec3& v, const Vec3& n) { return 2.0*Dot(v, n)*n - v; }
 static inline bool Refract(const Vec3& v, const Vec3& n, double ratio, Vec3* refracted)
 {
