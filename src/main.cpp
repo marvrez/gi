@@ -1,47 +1,47 @@
 #include <cstdio>
-#include <iostream>
 
 #include "utils.h"
-#include "vec3.h"
-#include "image.h"
-
 #include "sphere.h"
 #include "scene.h"
-#include "ray.h"
-#include "hit.h"
 #include "camera.h"
+#include "renderer.h"
+#include "microfacet_distribution.h"
 
-constexpr int w = 500, h = 500, num_samples = 16;
+constexpr int w = 500, h = 500, num_samples = 100;
 constexpr double aspect = (double)w / (double)h;
+
+inline Vec3 HexColor(const int hex) {
+    double r = double((hex >> 16) & 0xff) / 255;
+    double g = double((hex >> 8) & 0xff) / 255;
+    double b = double((hex >> 0) & 0xff) / 255;
+    return Pow(Vec3(r, g, b), 2.2);
+}
 
 int main(int argc, char** argv)
 {
+    Camera cam({0,5,3}, {0,0,0}, {0,0,1}, 45.0, aspect, 0.01);
+
+    //Material* floor_material = new OrenNayar(Vec3(0.9), 20);
+    //Material* floor_material = new Lambertian(new CheckeredTexture());
+    Material* floor_material = new OrenNayar(Vec3(0.9), 20);
+
+    PowerCosineDistribution* pcd = new PowerCosineDistribution(100);
+    //Material* sphere_material = new Dielectric();//{0.4, 0.6, 0.8});
+    //Material* sphere_material = new Microfacet(HexColor(0xFFF0A5), pcd, 2.0);
+    Material* sphere_material = new FresnelBlend(HexColor(0xFFF0A5), HexColor(0xFFF0A5), pcd);
+    //Material* sphere_material = new Specular(HexColor(0x808080));
+
     Scene scene;
-    scene.Add(new Sphere({0,0,-1}, 0.5, {}));
-    scene.Add(new Sphere({0,-100.5,-1}, 100, {}));
+    scene.Add(new Sphere({0,0,1}, 1,  sphere_material));
+    scene.Add(new Sphere({0,0,-999}, 999, floor_material));;
+    scene.Add(new Sphere({3,1,4}, 1, new DiffuseLight({7.5, 6.70143, 6.03107})));
     scene.Build();
 
-    Camera cam({0,0,3.3}, {0,0,0}, {0,1,0}, 45.0, aspect);
-    Image img(w, h);
+    Renderer renderer(&scene, &cam, w, h, num_samples);
 
     double t1 = TimeNow();
-    #pragma omp parallel for
-    for(int y = 0; y < h; ++y) {
-        Hit hit;
-        for(int x = 0; x < w; ++x) {
-            for(int s = 0; s < num_samples; ++s) {
-                double u = (x + RandomUniform()) / (double)w;
-                double v = 1.0 - (y + RandomUniform()) / (double)h;
-                Ray r = cam.CastRay(u,v);
-                bool did_hit = scene.Intersect(r, &hit);
-                HitRecord hr = did_hit ? hit.GetRecord(r) : HitRecord();
-                Rgb col = did_hit ? 0.5*(hr.normal+1) : Vec3(0.4f, .5f, .3f);
-                img.AddPixel(x, y, col);
-            }
-        }
-    }
+    renderer.Render("test.jpg", 1000);
     double t2 = TimeNow();
-    std::cout << "took " << t2 - t1 << " seconds\n";
-    img.SavePNG("test.png");
+    printf("rendering took %f seconds\n", t2-t1);
     return 0;
 }
