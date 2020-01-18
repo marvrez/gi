@@ -20,6 +20,7 @@ bool Scene::Intersect(const Ray& r, Hit* h)
 
 void Scene::Build()
 {
+    for(Surface* surface : this->surfaces) surface->Build();
     if(this->tree == nullptr) {
         this->tree = std::make_unique<KDTree>(this->surfaces);
     }
