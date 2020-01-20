@@ -12,6 +12,11 @@ void Scene::Add(Surface* s)
     if(s->Emittable()) this->lights.push_back(s);
 }
 
+void Scene::Add(std::shared_ptr<Surface> s)
+{
+    this->Add(s.get());
+}
+
 bool Scene::Intersect(const Ray& r, Hit* h)
 {
     ray_count++;

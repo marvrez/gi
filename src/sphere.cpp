@@ -14,7 +14,7 @@ Sphere::Sphere(Vec3 centre, double radius, Material* material)
     this->bbox = { min_point, max_point };
 }
 
-BBox Sphere::GetBBox() const
+BBox Sphere::GetBBox()
 {
     return this->bbox;
 }

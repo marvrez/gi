@@ -23,6 +23,7 @@ private:
 public:
     Scene() : background_texture(nullptr), background_color(Vec3(0.0)) {};
     void Add(Surface* s);
+    void Add(std::shared_ptr<Surface> s);
     bool Intersect(const Ray& r, Hit* h);
     void Build();
     std::vector<Surface*> Lights() const { return this->lights; }

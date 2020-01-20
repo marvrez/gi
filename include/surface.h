@@ -13,7 +13,7 @@ class Material;
 
 class Surface {
 public:
-    virtual BBox GetBBox() const = 0;
+    virtual BBox GetBBox() = 0;
     virtual bool Intersect(const Ray& r, Hit* h) const = 0;
     virtual Vec3 UV(const Vec3& p) const { return {}; }
     virtual Vec3 NormalAt(const Vec3& p) const { return {}; }

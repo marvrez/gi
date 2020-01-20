@@ -15,6 +15,9 @@ struct BBox {
     Vec3 min_point;
     Vec3 max_point;
 
+    BBox() = default;
+    BBox(const Vec3& min, const Vec3& max) : min_point(min), max_point(max) {}
+
     BBox Union(const BBox& b) const;
     bool Contains(const Vec3& p) const;
     bool Intersects(const BBox& b)  const;

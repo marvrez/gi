@@ -16,7 +16,7 @@ private:
 public:
     Plane(Vec3 point, Vec3 normal, Material* material);
 
-    virtual BBox GetBBox() const;
+    virtual BBox GetBBox();
     virtual bool Intersect(const Ray& r, Hit* h) const;
     virtual Vec3 NormalAt(const Vec3& p) const;
     virtual Material* MaterialAt(const Vec3& p) const;

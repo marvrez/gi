@@ -10,7 +10,7 @@ Plane::Plane(Vec3 point, Vec3 normal, Material* material)
     this->bbox = { Vec3(-M_INF), Vec3(M_INF) };
 }
 
-BBox Plane::GetBBox() const
+BBox Plane::GetBBox()
 {
     return this->bbox;
 }
