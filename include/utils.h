@@ -31,6 +31,11 @@ Vec3 RandomInUnitDisk();
 Vec3 RandomInUnitSphere();
 Vec3 CosineSampleHemisphere();
 
+// convert hex rgb to gamma corrected rgb floats
+Vec3 HexColor(int hex);
+// compute rgb color given temperature in Kelvin
+Vec3 ColorTemperature(double K);
+
 double TimeNow();
 
 #endif

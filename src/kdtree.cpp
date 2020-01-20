@@ -39,9 +39,9 @@ void KDNode::Split(int depth)
     Axis best_axis = Axis::NONE;
     double best_pos = 0.0;
     int count_x = this->PartitionCount(Axis::X, mx), count_y = this->PartitionCount(Axis::Y, my), count_z = this->PartitionCount(Axis::Z, mz);
-    if(count_x < best_size) best_size = count_x, best_axis = Axis::X, best_pos = mx;
-    if(count_y < best_size) best_size = count_y, best_axis = Axis::Y, best_pos = my;
-    if(count_z < best_size) best_size = count_z, best_axis = Axis::Z, best_pos = mz;
+    if(count_x < best_size) { best_size = count_x, best_axis = Axis::X, best_pos = mx; }
+    if(count_y < best_size) { best_size = count_y, best_axis = Axis::Y, best_pos = my; }
+    if(count_z < best_size) { best_size = count_z, best_axis = Axis::Z, best_pos = mz; }
     if(best_axis == Axis::NONE) return; // leaf node
     std::vector<Surface*> left_surfaces, right_surfaces;
     this->Partition(best_axis, best_pos, best_size, &left_surfaces, &right_surfaces);
@@ -50,6 +50,7 @@ void KDNode::Split(int depth)
     this->right = std::make_unique<KDNode>(right_surfaces);
     this->left->Split(depth+1);
     this->right->Split(depth+1);
+    this->surfaces.clear(); // only leaf nodes contains surfaces
 }
 
 bool KDNode::Intersect(const Ray& r, Hit* h)
