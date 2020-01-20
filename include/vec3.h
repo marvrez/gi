@@ -4,6 +4,7 @@
 #include "utils.h"
 
 #include <math.h>
+#include <functional>
 
 typedef Vec3 Rgb;
 
@@ -71,6 +72,22 @@ static inline bool Refract(const Vec3& v, const Vec3& n, double ratio, Vec3* ref
     if(discriminant <= 0) return false;
     *refracted = ratio*(uv - n*dt) - n*sqrt(discriminant);
     return true;
+}
+
+static inline void hash_combine(size_t& seed, size_t hash) { hash += 0x9e3779b9 + (seed << 6) + (seed >> 2); seed ^= hash; }
+namespace std
+{
+    template<> struct hash<Vec3> {
+        size_t operator()(Vec3 const& v) const
+        {
+            size_t seed = 0;
+            hash<double> hasher;
+            hash_combine(seed, hasher(v.x));
+            hash_combine(seed, hasher(v.y));
+            hash_combine(seed, hasher(v.z));
+            return seed;
+        }
+    };
 }
 
 #endif

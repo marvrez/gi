@@ -15,7 +15,7 @@ private:
 public:
     Sphere(Vec3 centre, double radius, Material* material);
 
-    virtual BBox GetBBox() const;
+    virtual BBox GetBBox();
     virtual bool Intersect(const Ray& r, Hit* h) const;
     virtual Vec3 UV(const Vec3& p) const;
     virtual Vec3 NormalAt(const Vec3& p) const;
