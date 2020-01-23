@@ -2,6 +2,8 @@
 
 #include "vec3.h"
 
+#include <math.h>
+
 Mat4::Mat4(double a00, double a01, double a02, double a03,
            double a10, double a11, double a12, double a13,
            double a20, double a21, double a22, double a23,

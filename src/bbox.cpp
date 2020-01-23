@@ -63,6 +63,11 @@ void BBox::Partition(Axis axis, double p, bool* left, bool* right) const
     }
 }
 
+Vec3 BBox::Anchor(const Vec3& anchor) const
+{
+    return this->min_point + this->Size()*anchor;
+}
+
 BBox SurroundingBBox(const std::vector<Surface*>& surfaces)
 {
     if(surfaces.size() == 0) return {};

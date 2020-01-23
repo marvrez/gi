@@ -24,6 +24,8 @@ struct BBox {
     bool Intersect(const Ray& r, double* t1, double* t2) const;
     Vec3 Size() const;
     void Partition(Axis axis, double p, bool* left, bool* right) const;
+
+    Vec3 Anchor(const Vec3& anchor) const;
 };
 
 BBox SurroundingBBox(const std::vector<Surface*>& surfaces);
