@@ -11,6 +11,7 @@
 class Texture {
 public:
     virtual Vec3 Sample(double u, double v, const Vec3& p) const = 0;
+    virtual ~Texture() {};
 };
 
 class SolidTexture : public Texture {

@@ -7,9 +7,9 @@
 #include <memory>
 
 class Surface;
+class Texture;
 struct Hit;
 struct Ray;
-struct Texture;
 
 class Scene {
 private:

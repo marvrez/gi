@@ -8,6 +8,7 @@ public:
     virtual double Eval(const Vec3& wh) const = 0;
     virtual double Pdf(const Vec3& wo, const Vec3& wi) const = 0;
     virtual Vec3 Sample(const Vec3& wo) const = 0;
+    virtual ~MicrofacetDistribution() {}
 };
 
 class PowerCosineDistribution : public MicrofacetDistribution {

@@ -19,6 +19,7 @@ public:
     virtual double Pdf(const Vec3& wo, const Vec3& wi) const { return 0; }
     virtual Vec3 Emitted(const HitRecord& hr) const { return Vec3(0); }
     virtual bool Emittable() const { return false; }
+    virtual ~Material() {}
 };
 
 class Lambertian : public Material {

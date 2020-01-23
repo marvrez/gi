@@ -2,6 +2,17 @@
 
 #include "vec3.h"
 
+Mat4::Mat4(double a00, double a01, double a02, double a03,
+           double a10, double a11, double a12, double a13,
+           double a20, double a21, double a22, double a23,
+           double a30, double a31, double a32, double a33)
+    : a00(a00), a01(a01), a02(a02), a03(a03),
+      a10(a10), a11(a11), a12(a12), a13(a13),
+      a20(a20), a21(a21), a22(a22), a23(a23),
+      a30(a30), a31(a31), a32(a32), a33(a33)
+{
+}
+
 Mat4 Mat4::Translate(const Vec3& t) const
 {
     return TranslationMatrix(t)*(*this);
@@ -14,7 +25,7 @@ Mat4 Mat4::Scale(const Vec3& s) const
 
 Mat4 Mat4::Rotate(const Vec3& axis, double angle_rad) const
 {
-    return Rotate(axis, angle_rad)*(*this);
+    return RotationMatrix(axis, angle_rad)*(*this);
 }
 
 Vec3 Mat4::MultiplyPosition(const Vec3& p) const

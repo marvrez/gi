@@ -22,6 +22,7 @@ public:
     virtual Ray RandomRay(const Vec3& hit_point) const { return {}; }
     virtual double Pdf(const Ray& r) const { return 0; }
     virtual void Build() {}
+    virtual ~Surface() {}
 };
 
 #endif
