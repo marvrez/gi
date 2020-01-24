@@ -5,7 +5,7 @@ OBJ= main.o utils.o image.o sphere.o hit.o camera.o bbox.o kdtree.o scene.o text
 EXECOBJA= 
 
 VPATH=./src/
-EXEC=tracer
+EXEC=gi
 OBJDIR=./obj/
 
 CPP=g++
