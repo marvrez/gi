@@ -7,6 +7,11 @@
 #include "sampler.h"
 #include "loading_bar.h"
 
+#ifdef EMBREE
+#include <pmmintrin.h>
+#include <xmmintrin.h>
+#endif
+
 #include <stdio.h>
 #include <string>
 #include <thread>
@@ -64,6 +69,11 @@ void Renderer::RenderFrame(int thread_id, LoadingBar* lb)
 
 void Renderer::Render(std::string filename, int num_iterations)
 {
+#ifdef EMBREE
+    // Intel says to do this, so we're doing it.
+    _MM_SET_FLUSH_ZERO_MODE(_MM_FLUSH_ZERO_ON);
+    _MM_SET_DENORMALS_ZERO_MODE(_MM_DENORMALS_ZERO_ON);
+#endif
     for(int iter = 1; iter <= num_iterations; ++iter) {
         printf("Iteration %d\n", iter);
         LoadingBar lb(this->img.Height());
