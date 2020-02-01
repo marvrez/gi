@@ -23,5 +23,6 @@
 #include "mat4.h"
 #include "scene.h"
 #include "utils.h"
+#include "cube.h"
 
 #endif
