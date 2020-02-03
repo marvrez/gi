@@ -19,12 +19,12 @@ Vec3 GridTexture::Sample(double u, double v, const Vec3& p) const
     return line > width / 2 ? a->Sample(u, v, p) : b->Sample(u, v, p);
 }
 
-ImageTexture::ImageTexture(std::string filename)
+ImageTexture::ImageTexture(const char* filename)
 {
-    printf("Loading texture: %s\n", filename.c_str());
-    this->data = stbi_load(filename.c_str(), &width, &height, &channels, 0);
+    printf("Loading texture: %s\n", filename);
+    this->data = stbi_load(filename, &width, &height, &channels, 0);
     if(!this->data) {
-        fprintf(stderr, "Cannot load image \"%s\"\nSTB Reason: %s\n", filename.c_str(), stbi_failure_reason());
+        fprintf(stderr, "Cannot load image \"%s\"\nSTB Reason: %s\n", filename, stbi_failure_reason());
         exit(0);
     }
 }

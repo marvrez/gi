@@ -5,7 +5,7 @@
 #include <string.h>
 #include <stdio.h>
 
-void SaveSTL(std::string path, const std::vector<int>& indices, const std::vector<Vec3>& vertices)
+void SaveSTL(const char* path, const std::vector<int>& indices, const std::vector<Vec3>& vertices)
 {
     unsigned num_triangles = indices.size() / 3;
     unsigned num_bytes = 50*num_triangles + 84;
@@ -27,7 +27,7 @@ void SaveSTL(std::string path, const std::vector<int>& indices, const std::vecto
         memcpy(&out_buffer[idx + 2*vec_bytes], v1_arr, vec_bytes);
         memcpy(&out_buffer[idx + 3*vec_bytes], v2_arr, vec_bytes);
     }
-    FILE* fp = fopen(path.c_str(), "wb");
+    FILE* fp = fopen(path, "wb");
     fwrite(out_buffer.data(), sizeof(char), num_bytes, fp);
     fclose(fp);
 }

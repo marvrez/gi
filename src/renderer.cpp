@@ -39,9 +39,9 @@ void Renderer::SaveImage(std::string filename, int iter)
         filename = formatted_filename;
     }
     std::string extension = GetFileExtension(filename);
-    if(extension == "png") this->img.SavePNG(filename);
-    else if(extension == "jpg" || extension == "jpeg") this->img.SaveJPG(filename);
-    else if(extension == "ppm") this->img.SavePPM(filename);
+    if(extension == "png") this->img.SavePNG(filename.c_str());
+    else if(extension == "jpg" || extension == "jpeg") this->img.SaveJPG(filename.c_str());
+    else if(extension == "ppm") this->img.SavePPM(filename.c_str());
     else {
         printf("Unsupported filetype '%s', must either be png, jpg or ppm. Exiting program...\n", extension.c_str());
         exit(0);

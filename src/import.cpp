@@ -16,9 +16,9 @@ static inline int FileSize(FILE* fp)
 
 static inline void IncrementFilePointer(FILE* fp, int offset) { fseek(fp, offset, SEEK_CUR); }
 
-std::shared_ptr<Mesh> ReadSTL(std::string path, Material* material)
+std::shared_ptr<Mesh> ReadSTL(const char* path, Material* material)
 {
-    FILE* fp = fopen(path.c_str(), "rb");
+    FILE* fp = fopen(path, "rb");
     int num_bytes = FileSize(fp);
     int num_triangles = (num_bytes - 84) / 50; // 84 header bytes, 50 bytes per triangle
     std::vector<Vec3> vertices(3*num_triangles);
