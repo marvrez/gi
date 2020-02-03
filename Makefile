@@ -1,7 +1,7 @@
 DEBUG  ?= 0
 EMBREE ?= 0
 
-OBJ= main.o utils.o image.o sphere.o hit.o camera.o bbox.o kdtree.o scene.o texture.o plane.o renderer.o material.o sampler.o onb.o microfacet_distribution.o loading_bar.o triangle.o mesh.o import.o mat4.o cube.o
+OBJ= main.o utils.o image.o sphere.o hit.o camera.o bbox.o kdtree.o scene.o texture.o plane.o renderer.o material.o sampler.o onb.o microfacet_distribution.o loading_bar.o triangle.o mesh.o import.o mat4.o cube.o export.o
 EXECOBJA= 
 
 VPATH=./src/
