@@ -2,7 +2,7 @@
 
 #include "vec3.h"
 
-#include <stdlib.h>
+#include <string.h>
 #include <stdio.h>
 
 void SaveSTL(std::string path, const std::vector<int>& indices, const std::vector<Vec3>& vertices)
