@@ -81,7 +81,7 @@ Vec3 Triangle::NormalAt(const Vec3& p) const
 
 Material* Triangle::MaterialAt(const Vec3& p) const
 {
-    return this->material.get();
+    return this->material;
 }
 
 bool Triangle::Emittable() const

@@ -13,7 +13,7 @@ private:
     friend class Mesh;
     Mesh* mesh; // pointer to parent mesh that stores all data
     const int* v; // face indices
-    std::shared_ptr<Material> material;
+    Material* material;
 
     Vec3 Barycentric(const Vec3& pos) const;
 public:
