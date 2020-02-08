@@ -4,7 +4,6 @@
 #include "vec3.h"
 
 #include <vector>
-#include <string>
 
 struct Pixel {
     int num_samples;
@@ -26,9 +25,9 @@ public:
     int Width()     const   { return width; }
     int Height()    const   { return height; }
 
-    bool SaveJPG(const std::string& filename, int quality=90) const;
-    bool SavePNG(const std::string& filename)  const;
-    bool SavePPM(const std::string& filename)  const;
+    bool SaveJPG(const char* filename, int quality=90) const;
+    bool SavePNG(const char* filename)  const;
+    bool SavePPM(const char* filename)  const;
 };
 
 #endif

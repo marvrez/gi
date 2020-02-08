@@ -5,6 +5,11 @@
 #include "bbox.h"
 #include "kdtree.h"
 
+#ifdef EMBREE
+#include <embree3/rtcore.h>
+extern RTCDevice device;
+#endif
+
 #include <vector>
 #include <memory>
 
@@ -23,6 +28,9 @@ private:
     std::vector<int> indices; // face indices
     std::vector<Vec3> positions, normals, texcoords;
     std::vector<Triangle> triangles; // triangle interfaces for shape intersection
+#ifdef EMBREE
+    RTCScene embree_scene;
+#endif
 
     void Dirtify();
 public:

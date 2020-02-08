@@ -14,6 +14,7 @@
 #include "plane.h"
 #include "texture.h"
 #include "import.h"
+#include "export.h"
 #include "ray.h"
 #include "triangle.h"
 #include "kdtree.h"
@@ -23,5 +24,6 @@
 #include "mat4.h"
 #include "scene.h"
 #include "utils.h"
+#include "cube.h"
 
 #endif

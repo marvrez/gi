@@ -30,24 +30,24 @@ static inline std::vector<unsigned char> GetRgbBytes(const std::vector<Pixel>& p
     return bytes;
 }
 
-bool Image::SaveJPG(const std::string& filename, int quality) const
+bool Image::SaveJPG(const char* filename, int quality) const
 {
     std::vector<unsigned char> bytes = GetRgbBytes(this->data);
-    int success = stbi_write_jpg(filename.c_str(), width, height, 3, bytes.data(), quality);
+    int success = stbi_write_jpg(filename, width, height, 3, bytes.data(), quality);
     return success;
 }
 
-bool Image::SavePNG(const std::string& filename) const
+bool Image::SavePNG(const char* filename) const
 {
     std::vector<unsigned char> bytes = GetRgbBytes(this->data);
-    int success = stbi_write_png(filename.c_str(), width, height, 3, bytes.data(), 3*width);
+    int success = stbi_write_png(filename, width, height, 3, bytes.data(), 3*width);
     return success;
 }
 
-bool Image::SavePPM(const std::string& filename) const
+bool Image::SavePPM(const char* filename) const
 {
     std::vector<unsigned char> bytes = GetRgbBytes(this->data);
-    FILE* fp = fopen(filename.c_str(), "wb");
+    FILE* fp = fopen(filename, "wb");
     fprintf(fp, "P6\n%d %d\n%d\n", width, height, 255);
     fwrite(bytes.data(), sizeof(unsigned char), bytes.size(), fp);
     fclose(fp);

@@ -6,7 +6,6 @@
 #include "utils.h"
 
 #include <memory>
-#include <string>
 
 class Texture {
 public:
@@ -48,7 +47,7 @@ private:
     int height, width, channels;
 public:
     ImageTexture() = delete;
-    ImageTexture(std::string filename);
+    ImageTexture(const char* filename);
     ImageTexture(unsigned char* data, int height, int width) : data(data), height(height), width(width) {}
     ~ImageTexture() { delete[] this->data; }
     bool IsValid() const { return this->data != nullptr; };

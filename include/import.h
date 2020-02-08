@@ -3,13 +3,12 @@
 
 #include "mesh.h"
 
-#include <string>
 #include <memory>
 
 class Material;
 
-std::shared_ptr<Mesh> ReadSTL(std::string path, Material* material);
-std::shared_ptr<Mesh> ReadOBJ(std::string path, Material* material);
-std::shared_ptr<Mesh> ReadOFF(std::string path, Material* material);
+std::shared_ptr<Mesh> ReadSTL(const char* path, Material* material);
+std::shared_ptr<Mesh> ReadOBJ(const char* path, Material* material);
+std::shared_ptr<Mesh> ReadOFF(const char* path, Material* material);
 
 #endif
