@@ -92,3 +92,19 @@ Vec3 Sample(Scene* scene, const Ray& ray, int min_bounces, int max_bounces)
     }
     return col;
 }
+
+Vec3 SampleAO(Scene* scene, const Ray& ray, int num_samples)
+{
+    Hit hit;
+    if(!scene->Intersect(ray, &hit)) return SampleBackground(scene, ray);
+    HitRecord hr = hit.GetRecord(ray);
+
+    ONB onb(hr.normal);
+    double occlusion = 0;
+    for(int i = 0; i < num_samples; ++i) {
+        Vec3 wi = CosineSampleHemisphere();
+        bool is_visible = scene->Intersect(Ray(hr.position, onb.LocalToWorld(wi)), &hit);
+        if(!is_visible) occlusion += 1;
+    }
+    return Vec3(occlusion / num_samples);
+}
