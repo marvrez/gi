@@ -126,6 +126,45 @@ Mat4 Transpose(const Mat4& m)
     };
 }
 
+double Determinant(const Mat4& m)
+{
+    return m.a00*m.a11*m.a22*m.a33 - m.a00*m.a11*m.a23*m.a32 +
+           m.a00*m.a12*m.a23*m.a31 - m.a00*m.a12*m.a21*m.a33 +
+           m.a00*m.a13*m.a21*m.a32 - m.a00*m.a13*m.a22*m.a31 -
+           m.a01*m.a12*m.a23*m.a30 + m.a01*m.a12*m.a20*m.a33 -
+           m.a01*m.a13*m.a20*m.a32 + m.a01*m.a13*m.a22*m.a30 -
+           m.a01*m.a10*m.a22*m.a33 + m.a01*m.a10*m.a23*m.a32 +
+           m.a02*m.a13*m.a20*m.a31 - m.a02*m.a13*m.a21*m.a30 +
+           m.a02*m.a10*m.a21*m.a33 - m.a02*m.a10*m.a23*m.a31 +
+           m.a02*m.a11*m.a23*m.a30 - m.a02*m.a11*m.a20*m.a33 -
+           m.a03*m.a10*m.a21*m.a32 + m.a03*m.a10*m.a22*m.a31 -
+           m.a03*m.a11*m.a22*m.a30 + m.a03*m.a11*m.a20*m.a32 -
+           m.a03*m.a12*m.a20*m.a31 + m.a03*m.a12*m.a21*m.a30;
+}
+
+Mat4 Inverse(const Mat4& m)
+{
+    Mat4 inv;
+    double d = Determinant(m);
+    inv.a00 = (m.a12*m.a23*m.a31 - m.a13*m.a22*m.a31 + m.a13*m.a21*m.a32 - m.a11*m.a23*m.a32 - m.a12*m.a21*m.a33 + m.a11*m.a22*m.a33) / d;
+    inv.a01 = (m.a03*m.a22*m.a31 - m.a02*m.a23*m.a31 - m.a03*m.a21*m.a32 + m.a01*m.a23*m.a32 + m.a02*m.a21*m.a33 - m.a01*m.a22*m.a33) / d;
+    inv.a02 = (m.a02*m.a13*m.a31 - m.a03*m.a12*m.a31 + m.a03*m.a11*m.a32 - m.a01*m.a13*m.a32 - m.a02*m.a11*m.a33 + m.a01*m.a12*m.a33) / d;
+    inv.a03 = (m.a03*m.a12*m.a21 - m.a02*m.a13*m.a21 - m.a03*m.a11*m.a22 + m.a01*m.a13*m.a22 + m.a02*m.a11*m.a23 - m.a01*m.a12*m.a23) / d;
+    inv.a10 = (m.a13*m.a22*m.a30 - m.a12*m.a23*m.a30 - m.a13*m.a20*m.a32 + m.a10*m.a23*m.a32 + m.a12*m.a20*m.a33 - m.a10*m.a22*m.a33) / d;
+    inv.a11 = (m.a02*m.a23*m.a30 - m.a03*m.a22*m.a30 + m.a03*m.a20*m.a32 - m.a00*m.a23*m.a32 - m.a02*m.a20*m.a33 + m.a00*m.a22*m.a33) / d;
+    inv.a12 = (m.a03*m.a12*m.a30 - m.a02*m.a13*m.a30 - m.a03*m.a10*m.a32 + m.a00*m.a13*m.a32 + m.a02*m.a10*m.a33 - m.a00*m.a12*m.a33) / d;
+    inv.a13 = (m.a02*m.a13*m.a20 - m.a03*m.a12*m.a20 + m.a03*m.a10*m.a22 - m.a00*m.a13*m.a22 - m.a02*m.a10*m.a23 + m.a00*m.a12*m.a23) / d;
+    inv.a20 = (m.a11*m.a23*m.a30 - m.a13*m.a21*m.a30 + m.a13*m.a20*m.a31 - m.a10*m.a23*m.a31 - m.a11*m.a20*m.a33 + m.a10*m.a21*m.a33) / d;
+    inv.a21 = (m.a03*m.a21*m.a30 - m.a01*m.a23*m.a30 - m.a03*m.a20*m.a31 + m.a00*m.a23*m.a31 + m.a01*m.a20*m.a33 - m.a00*m.a21*m.a33) / d;
+    inv.a22 = (m.a01*m.a13*m.a30 - m.a03*m.a11*m.a30 + m.a03*m.a10*m.a31 - m.a00*m.a13*m.a31 - m.a01*m.a10*m.a33 + m.a00*m.a11*m.a33) / d;
+    inv.a23 = (m.a03*m.a11*m.a20 - m.a01*m.a13*m.a20 - m.a03*m.a10*m.a21 + m.a00*m.a13*m.a21 + m.a01*m.a10*m.a23 - m.a00*m.a11*m.a23) / d;
+    inv.a30 = (m.a12*m.a21*m.a30 - m.a11*m.a22*m.a30 - m.a12*m.a20*m.a31 + m.a10*m.a22*m.a31 + m.a11*m.a20*m.a32 - m.a10*m.a21*m.a32) / d;
+    inv.a31 = (m.a01*m.a22*m.a30 - m.a02*m.a21*m.a30 + m.a02*m.a20*m.a31 - m.a00*m.a22*m.a31 - m.a01*m.a20*m.a32 + m.a00*m.a21*m.a32) / d;
+    inv.a32 = (m.a02*m.a11*m.a30 - m.a01*m.a12*m.a30 - m.a02*m.a10*m.a31 + m.a00*m.a12*m.a31 + m.a01*m.a10*m.a32 - m.a00*m.a11*m.a32) / d;
+    inv.a33 = (m.a01*m.a12*m.a20 - m.a02*m.a11*m.a20 + m.a02*m.a10*m.a21 - m.a00*m.a12*m.a21 - m.a01*m.a10*m.a22 + m.a00*m.a11*m.a22) / d;
+    return inv;
+}
+
 Mat4 FrustumMatrix(double left, double right, double bottom, double top, double near, double far)
 {
     double t1 = 2*near, t2 = right - left, t3 = top - bottom, t4 = far - near;
@@ -161,6 +200,17 @@ Mat4 PerspectiveMatrix(double vfov_rad, double aspect, double z_near, double z_f
     };
 }
 
-Mat4 LookAtMatrix(const Vec3& eye, const Vec3& centre, const Vec3& up)
+Mat4 LookAtMatrix(const Vec3& lookfrom, const Vec3& lookat, const Vec3& up)
 {
+    // orthonormal basis
+    Vec3 w = Normalized(lookat - lookfrom);
+    Vec3 u = Normalized(Cross(w, up));
+    Vec3 v = Normalized(Cross(u, w));
+    Mat4 m = {
+        u.x, v.x, w.x, 0,
+        u.y, v.y, w.y, 0,
+        u.z, v.z, w.z, 0,
+        0  , 0  , 0  , 1
+    };
+    return Transpose(Inverse(m.Translate(lookfrom)));
 }
