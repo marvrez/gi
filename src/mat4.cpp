@@ -115,3 +115,52 @@ Mat4 operator*(const Mat4& a, const Mat4& b)
     m.a33 = a.a30*b.a03 + a.a31*b.a13 + a.a32*b.a23 + a.a33*b.a33;
     return m;
 }
+
+Mat4 Transpose(const Mat4& m)
+{
+    return {
+        m.a00, m.a10, m.a20, m.a30,
+        m.a01, m.a11, m.a21, m.a31,
+        m.a02, m.a12, m.a22, m.a32,
+        m.a03, m.a13, m.a23, m.a33
+    };
+}
+
+Mat4 FrustumMatrix(double left, double right, double bottom, double top, double near, double far)
+{
+    double t1 = 2*near, t2 = right - left, t3 = top - bottom, t4 = far - near;
+    return {
+        t1/t2, 0, (right+left)/t2, 0,
+        0, t1/t3, (top+bottom)/t3, 0,
+        0, 0, -(far+near)/t4, -t1*far/t4,
+        0, 0, -1, 0
+    };
+}
+
+Mat4 OrthographicMatrix(double left, double right, double bottom, double top, double z_near, double z_far)
+{
+    // Map x from [left, right] to [-1, +1]
+    //     y from [bottom, top] to [-1, +1]
+    //     z from [z_near, z_far]      to [-1, +1]
+    return {
+        2.0 / (right - left), 0, 0, -(right + left) / (right - left),
+        0, 2.0 / (top - bottom), 0, -(top + bottom) / (top - bottom),
+        0, 0, -2.0 / (z_far - z_near), -(z_far + z_near) / (z_far - z_near),
+        0, 0, 0, 1
+    };
+}
+
+Mat4 PerspectiveMatrix(double vfov_rad, double aspect, double z_near, double z_far)
+{
+    double f = tan(M_PI_2 - 0.5*vfov_rad), range_inv = 1.0 / (z_near - z_far);
+    return {
+        f / aspect, 0, 0, 0,
+        0, f, 0, 0,
+        0, 0, (z_near+z_far)*range_inv, 2.0*(z_near*z_far)*range_inv,
+        0, 0, -1, 0
+    };
+}
+
+Mat4 LookAtMatrix(const Vec3& eye, const Vec3& centre, const Vec3& up)
+{
+}

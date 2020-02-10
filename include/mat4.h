@@ -34,5 +34,11 @@ Mat4 TranslationMatrix(const Vec3& t);
 Mat4 ScaleMatrix(const Vec3& s);
 Mat4 RotationMatrix(const Vec3& axis, double angle_rad);
 Mat4 operator*(const Mat4& a, const Mat4& b);
+Mat4 Transpose(const Mat4& m);
+
+Mat4 FrustumMatrix(double left, double right, double bottom, double top, double near, double far);
+Mat4 OrthographicMatrix(double left, double right, double bottom, double top, double z_near=-1, double z_far=1);
+Mat4 PerspectiveMatrix(double vfov_rad, double aspect, double z_near, double z_far);
+Mat4 LookAtMatrix(const Vec3& eye, const Vec3& centre, const Vec3& up);
 
 #endif
