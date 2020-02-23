@@ -70,6 +70,7 @@ Vec3 Sample(Scene* scene, const Ray& ray, int min_bounces, int max_bounces)
 
         ONB onb(hr.normal);
         Vec3 wo = onb.WorldToLocal(Normalized(-cur_ray.direction));
+        // sample indirect lighting over the hemisphere
         Vec3 wi = hr.material->Sample(wo, &is_specular);
         double pdf = hr.material->Pdf(wo, wi);
         Vec3 attenuation = hr.material->Eval(wo, wi, hr);
